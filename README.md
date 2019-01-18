@@ -1,6 +1,6 @@
 # nikoniko
 
-> Niko Niko developed by ApetEat team for testing Vue.js
+> Nuxt.js project
 
 ## Build Setup
 

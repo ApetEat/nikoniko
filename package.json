@@ -1,8 +1,8 @@
 {
   "name": "nikoniko",
   "version": "1.0.0",
-  "description": "ApetEat team testing Vue.js",
-  "author": "(ApetEat team <apeteaters@apeteat.es>)",
+  "description": "Nuxt.js project",
+  "author": "Francesc",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -13,6 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "bootstrap-vue": "^2.0.0-rc.11",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {
