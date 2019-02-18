@@ -7,7 +7,7 @@ const createStore = () => {
     state: {
       name: '',
       email: '',
-      estados: [],
+      estados: []
     },
     mutations: {
       ADD_ESTADO (state, id) {

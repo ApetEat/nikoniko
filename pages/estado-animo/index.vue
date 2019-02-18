@@ -28,10 +28,6 @@
 </script>
 
 <style>
-  .wait {
-    cursor: wait;
-  }
-
   .col-xs-5,
   .col-sm-5,
   .col-md-5,
