@@ -1,12 +1,12 @@
 <template>
   <span>
     <div class="form-group">
-      <label for="name">Introduce tu nombre:</label>
-      <input class="form-control" id="name" placeholder="nombre" v-model="theEmail.name" />
+      <label for="name">{{ $t('form.label_name') }}</label>
+      <input class="form-control" id="name" :placeholder="$t('form.label_placeholder_name')" v-model="theEmail.name" />
     </div>
     <div class="form-group">
-      <label for="email">Introduce tu e-mail:</label>
-      <input class="form-control" id="email" placeholder="e-mail" v-model="theEmail.email" />
+      <label for="email">{{ $t('form.label_email') }}</label>
+      <input class="form-control" id="email" :placeholder="$t('form.label_placeholder_email')" v-model="theEmail.email" />
     </div>
   </span>
 </template>

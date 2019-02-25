@@ -2,7 +2,7 @@
   <div class="container" style="margin-top:50px;">
     <div class="row">
       <div class="col-xs-12 col-sm-5 center" v-for="estado in estados" :key="estado.id">
-        <img v-on:click="estadoClick(estado.id)" :src="require('@/assets/'+(estado.image))" :alt="estado.txt" :title="estado.txt" class="img-responsive"/>
+        <img v-on:click="estadoClick(estado.id)" :src="require('@/static/'+(estado.image))" :alt="estado.txt" :title="estado.txt" class="img-responsive"/>
         <p class="ico-text">{{ estado.txt }}</p> 
       </div>
     </div>
@@ -11,17 +11,22 @@
 
 <script>
   import axiospost from '@/plugins/axios-post';
+  import axiosget from '@/plugins/axios-get';
   export default {
     layout: 'niko-niko',
-    data() {
-      return { 
-        estados: this.$store.state.estados
-      }
-    },
     methods: {
       estadoClick (id) {
         document.body.className = 'wait';
         this.$store.dispatch('addEstado', id); 
+      }
+    },
+    fetch ({store}) {
+      console.log(store.state.i18n.locale);
+      store.dispatch('getEstados',store.state.i18n.locale)
+    },
+    computed: {
+      estados () {
+        return this.$store.state.estados
       }
     }
   }

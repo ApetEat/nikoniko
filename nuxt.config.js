@@ -1,3 +1,5 @@
+const { I18N } = require('./config')
+
 module.exports = {
   /*
   ** Headers of the page
@@ -25,7 +27,6 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor:['axios'],
     /*
     ** Run ESLint on save
     */
@@ -39,6 +40,9 @@ module.exports = {
         })
       }
     }
-  }
+  },
+  modules: [
+    ['nuxt-i18n', I18N]
+  ]
 }
 

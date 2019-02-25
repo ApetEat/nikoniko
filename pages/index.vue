@@ -2,7 +2,7 @@
   <section>
     <form v-on:submit.prevent="createProduct" novalidate="true">
       <email-form :the-email="EmailUser"></email-form>
-      <button type="submit" class="btn btn-primary">Enviar</button>
+      <button type="submit" class="btn btn-primary">{{ $t('form.button') }}</button>
     </form>
     <p class="error" v-if="errors.length">
       <b>Por favor corrige los siguientes errores:</b>
@@ -39,7 +39,10 @@ export default {
       }
       if (!this.errors.length) {
         this.$store.dispatch('addUser', this.EmailUser)
-        this.$router.push('/estado-animo')
+        //this.$router.push('/estado-animo')
+        //this.$router.push(this.localePath('animo'))
+        this.$router.push(this.localePath({ name: 'estado-animo' }))
+        //console.log(this.localePath)
       }
       e.preventDefault();
     },

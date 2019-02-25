@@ -7,14 +7,11 @@ const createStore = () => {
     state: {
       name: '',
       email: '',
-      estados: []
+      estados: [],
+      control: ''
     },
     mutations: {
       ADD_ESTADO (state, id) {
-        //console.log('add ' + state.name);
-        //console.log('add ' + state.email);
-        //console.log('add ' + id);
-
         const params = {
           name: state.name,
           email: state.email,
@@ -25,10 +22,10 @@ const createStore = () => {
           console.log(response); 
           if (response.status==200) {
             if (response.data=="ok") {
-              $nuxt.$router.push('/gracias');
-           }
+              $nuxt.$router.push($nuxt.localePath({ name: 'gracias' }));
+            }
             else if (response.data=="votado") {
-              $nuxt.$router.push('/ya-votado');
+              $nuxt.$router.push($nuxt.localePath({ name: 'votado' }));
             }
           }
 
@@ -43,22 +40,24 @@ const createStore = () => {
       }
     },
     actions: {
+      async getEstados ({commit},lang) {
+        const { data } = await axiosget.get('', { params: { lang: lang }});
+        commit('SET_DATA', data);
+      },
       addEstado({commit}, id) {
         new Promise((resolve) => setTimeout(resolve, 500)).then( () => {
-          //console.log('add1')
           commit('ADD_ESTADO', id) 
         })
       },
       addUser({commit}, users) {
         new Promise((resolve) => setTimeout(resolve, 2000)).then( () => {
-          //console.log('add1')
           commit('ADD_USER', users) 
         })
-      },
+      }/*,
       async nuxtServerInit({ commit, dispatch }) {
-        const { data } = await axiosget.get();
+        const { data } = await axiosget.get('', { params: { lang: 'ca' }});
         commit('SET_DATA', data);
-      }
+      }*/
     }
   })
 }
