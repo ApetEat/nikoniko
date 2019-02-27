@@ -2,8 +2,13 @@
   <div class="container" style="margin-top:50px;">
     <div class="row">
       <div class="col-xs-12 col-sm-5 center" v-for="estado in estados" :key="estado.id">
-        <img v-on:click="estadoClick(estado.id)" :src="require('@/static/'+(estado.image))" :alt="estado.txt" :title="estado.txt" class="img-responsive"/>
-        <p class="ico-text">{{ estado.txt }}</p> 
+        <div :id="'loading'+estado.id" class="hide">
+          <img src="@/static/ajax-loader.gif" alt="Loading" title="Loading"/>
+        </div>
+        <div :id="'estado'+estado.id">
+          <img v-on:click="estadoClick(estado.id)" :src="require('@/static/'+(estado.image))" :alt="estado.txt" :title="estado.txt" class="img-responsive"/>
+          <p class="ico-text">{{ estado.txt }}</p> 
+        </div>   
       </div>
     </div>
   </div>
@@ -16,7 +21,8 @@
     layout: 'niko-niko',
     methods: {
       estadoClick (id) {
-        document.body.className = 'wait';
+        document.getElementById('estado'+id).className='hide';
+        document.getElementById('loading'+id).className='show';
         this.$store.dispatch('addEstado', id); 
       }
     },
@@ -33,6 +39,15 @@
 </script>
 
 <style>
+  .hide {
+    display: none;
+  }
+
+  .show {
+    display: block;
+    padding-top:40px;
+  }
+  
   .col-xs-5,
   .col-sm-5,
   .col-md-5,

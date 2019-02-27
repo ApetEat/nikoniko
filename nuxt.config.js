@@ -27,6 +27,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    vendor: ['vee-validate'],
     /*
     ** Run ESLint on save
     */
@@ -43,6 +44,10 @@ module.exports = {
   },
   modules: [
     ['nuxt-i18n', I18N]
-  ]
+  ],
+  plugins: [
+    { src: '~plugins/vee-validate.js', ssr:true },
+    { src: '~plugins/i18n.js' },
+]
 }
 
