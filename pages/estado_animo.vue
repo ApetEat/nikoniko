@@ -2,14 +2,16 @@
   <div class="container" style="margin-top:50px;">
     <div class="row">
       <div class="col-xs-12 col-sm-5 center" v-for="estado in estados" :key="estado.id">
-        <div :id="'loading'+estado.id" class="hide">
-          <img src="@/static/ajax-loader.gif" alt="Loading" title="Loading"/>
-        </div>
         <div :id="'estado'+estado.id">
           <img v-on:click="estadoClick(estado.id)" :src="require('@/static/'+(estado.image))" :alt="estado.txt" :title="estado.txt" class="img-responsive"/>
           <p class="ico-text">{{ estado.txt }}</p> 
         </div>   
       </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 center" v-if="isLoadingVisible">
+        {{ $t('enviando') }} <img src="@/static/ajax-loader.gif" alt="Loading" title="Loading"/>  
+      </div>   
     </div>
   </div>
 </template>
@@ -18,12 +20,26 @@
   import axiospost from '@/plugins/axios-post';
   import axiosget from '@/plugins/axios-get';
   export default {
+    data () {
+      return {
+        isLoadingVisible: false
+      }  
+    },
     layout: 'niko-niko',
     methods: {
       estadoClick (id) {
-        document.getElementById('estado'+id).className='hide';
-        document.getElementById('loading'+id).className='show';
-        this.$store.dispatch('addEstado', id); 
+        this.isLoadingVisible=true;
+        const params = {
+          name: this.$store.state.name,
+          email: this.$store.state.email,
+          estado: id
+        };
+        axiospost.post('', params).then(function(response) {
+          console.log(response.data); 
+          if (response.status==200) {
+            $nuxt.$router.push($nuxt.localePath({ name: response.data }))
+          }
+        });
       }
     },
     fetch ({store}) {

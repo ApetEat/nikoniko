@@ -1,6 +1,7 @@
 module.exports = {
     gracias: 'Thank you very much!',
     votado: 'You can only vote once a day.',
+    enviando: 'Sending...',
     form: {
         label_name: 'Enter your name:',
         label_placeholder_name: 'name',

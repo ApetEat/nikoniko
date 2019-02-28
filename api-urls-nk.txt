@@ -1,5 +1,0 @@
-GET
-http://www.felixoficina.com/nikoniko/estados.php
-
-POST
-http://www.felixoficina.com/nikoniko/recibe-estado.php

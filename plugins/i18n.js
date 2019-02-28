@@ -10,8 +10,7 @@ export default function({ app }) {
   Validator.localize('es', es)
   Validator.localize('ca', ca)
 
-  // Localizing the app when user refresh or access a localized link
-  //Validator.localize('ca')
+  Validator.localize(app.i18n.locale)
 
   // beforeLanguageSwitch called right before setting a new locale
   app.i18n.beforeLanguageSwitch = (oldLocale, newLocale) => {

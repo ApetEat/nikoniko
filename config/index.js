@@ -28,7 +28,7 @@ const I18N = {
   ],
   parsePages: false,
   pages: {
-    'estado-animo/index': {
+    estado_animo: {
       ca: '/estat-anim',
       es: '/estado-animo',
       en: '/current-mood'

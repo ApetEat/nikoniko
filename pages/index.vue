@@ -34,8 +34,9 @@ export default {
 
       this.$validator.validateAll().then((result) => {
         if (result) {
-          this.$store.dispatch('addUser', this.EmailUser)
-          this.$router.push(this.localePath({ name: 'estado-animo' }))
+          this.$store.dispatch('addUser', this.EmailUser).then(()=>{
+            this.$router.push(this.localePath({ name: 'estado_animo' }))
+          })
           return;
         }
       });
