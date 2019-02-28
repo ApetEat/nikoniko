@@ -1,51 +1,45 @@
 <template>
   <section>
-    <form v-on:submit.prevent="createProduct" novalidate="true">
-      <email-form :the-email="EmailUser"></email-form>
-      <button type="submit" class="btn btn-primary">Enviar</button>
+    <form v-on:submit.prevent="sendForm">
+      <!--<email-form :the-email="EmailUser"></email-form>-->
+      <div class="form-group">
+        <label for="name">{{ $t('form.label_name') }}</label>
+        <input class="form-control" id="name" :name="$t('form.label_placeholder_name')" :placeholder="$t('form.label_placeholder_name')" v-model="EmailUser.name" v-validate="'required'" />
+        <span v-show="errors.has($t('form.label_placeholder_name'))" class="error">{{ errors.first($t('form.label_placeholder_name')) }}</span>
+      </div>
+      <div class="form-group">
+        <label for="email">{{ $t('form.label_email') }}</label>
+        <input class="form-control" id="email" :name="$t('form.label_placeholder_email')" :placeholder="$t('form.label_placeholder_email')" v-model="EmailUser.email" v-validate="'required|email'" />
+        <span v-show="errors.has($t('form.label_placeholder_email'))" class="error">{{ errors.first($t('form.label_placeholder_email')) }}</span>
+      </div>
+      <button type="submit" class="btn btn-primary">{{ $t('form.button') }}</button>
     </form>
-    <p class="error" v-if="errors.length">
-      <b>Por favor corrige los siguientes errores:</b>
-      <ul>
-        <li v-for="error in errors" :key="error">{{ error }}</li>
-      </ul>
-    </p>
   </section>
 </template>
 
 <script>
 
-import EmailForm from '../components/email-form.vue'
-
 export default {
-  components: { EmailForm },
   layout: 'niko-niko',
   data () {
     return {
-      EmailUser: {name: this.$store.state.name, email: this.$store.state.email},
-      errors:[]
+      EmailUser: {name: this.$store.state.name, email: this.$store.state.email}
     }  
   },
   methods: {
-    createProduct (e) {
-      this.errors = [];
-      if (!this.EmailUser.name) {
-        this.errors.push('El nombre es obligatorio.');
-      }
-      if (!this.EmailUser.email) {
-        this.errors.push('El e-mail es obligatorio.');
-      } else if (!this.validEmail(this.EmailUser.email)) {
-        this.errors.push('Introduce un e-mail válido.');
-      }
-      if (!this.errors.length) {
-        this.$store.dispatch('addUser', this.EmailUser)
-        this.$router.push('/estado-animo')
-      }
-      e.preventDefault();
-    },
-    validEmail: function (email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+    sendForm (e) {
+      
+      //e.preventDefault()
+      //console.log('validator', this.$validator)
+
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.$store.dispatch('addUser', this.EmailUser).then(()=>{
+            this.$router.push(this.localePath({ name: 'estado_animo' }))
+          })
+          return;
+        }
+      });
     }
   }
 }

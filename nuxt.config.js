@@ -1,3 +1,5 @@
+const { I18N } = require('./config')
+
 module.exports = {
   /*
   ** Headers of the page
@@ -25,7 +27,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor:['axios'],
+    vendor: ['vee-validate'],
     /*
     ** Run ESLint on save
     */
@@ -39,6 +41,13 @@ module.exports = {
         })
       }
     }
-  }
+  },
+  modules: [
+    ['nuxt-i18n', I18N]
+  ],
+  plugins: [
+    { src: '~plugins/vee-validate.js', ssr:true },
+    { src: '~plugins/i18n.js' },
+]
 }
 
