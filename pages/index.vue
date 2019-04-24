@@ -1,65 +1,64 @@
 <template>
-  <section class="container">
-    <div>
-      <app-logo/>
-      <h1 class="title">
-        nikoniko
-      </h1>
-      <h2 class="subtitle">
-        ApetEat team testing Vue.js
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
-    </div>
+  <section>
+    <form v-on:submit.prevent="createProduct" novalidate="true">
+      <email-form :the-email="EmailUser"></email-form>
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+    <p class="error" v-if="errors.length">
+      <b>Por favor corrige los siguientes errores:</b>
+      <ul>
+        <li v-for="error in errors" :key="error">{{ error }}</li>
+      </ul>
+    </p>
   </section>
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
+
+import EmailForm from '../components/email-form.vue'
 
 export default {
-  components: {
-    AppLogo
+  components: { EmailForm },
+  layout: 'niko-niko',
+  data () {
+    return {
+      EmailUser: {name: this.$store.state.name, email: this.$store.state.email},
+      errors:[]
+    }  
+  },
+  methods: {
+    createProduct (e) {
+      this.errors = [];
+      if (!this.EmailUser.name) {
+        this.errors.push('El nombre es obligatorio.');
+      }
+      if (!this.EmailUser.email) {
+        this.errors.push('El e-mail es obligatorio.');
+      } else if (!this.validEmail(this.EmailUser.email)) {
+        this.errors.push('Introduce un e-mail válido.');
+      }
+      if (!this.errors.length) {
+        this.$store.dispatch('addUser', this.EmailUser)
+        this.$router.push('/estado-animo')
+      }
+      e.preventDefault();
+    },
+    validEmail: function (email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
   }
 }
 </script>
 
 <style>
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.form-group {
+  max-width: 500px;
 }
 
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.error {
+  margin-top: 20px;
+  color:red;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
-
